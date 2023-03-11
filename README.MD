@@ -5,6 +5,7 @@ It is a simple CRUD project with unit tests examples.
 # Installation
 - Clone the repository using git clone 
 - ``https://github.com/projectslist/to-do-list.git``.
+- Make ready python env for the project
 - Run the server using python manage.py runserver.
 
 # URL Patterns
