@@ -1,0 +1,96 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+
+    <div>
+        <h1>Hello {{request.user |title}}</h1>
+        <h3 style="margin:0"> You have <i>{{count}} </i> incomplete task{{ count|pluralize}}!</h3>
+    </div>
+
+    {% if request.user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+</div>
+
+
+<!--<hr>-->
+<!--<h1>My To Do List</h1>-->
+
+
+<!--<a href="{% url 'task-create' %}">Add Task</a>-->
+<!--<form action="" method="GET">-->
+<!--  <input type="text" name="search-area" value="{{search_input}}">-->
+<!--  <input type="submit" value="Search">-->
+<!--</form>-->
+
+<div id="search-add-wrapper">
+    <form action="" method="GET" style="margin-top:20; display:flex;">
+        <input type="text" name="search-area" value="{{search_input}}">
+        <input type="submit" class="button" value="Search">
+    </form>
+
+    <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+</div>
+
+
+{% for task in page %}
+
+
+    <div class="task-wrapper">
+        {% if task.complete %}
+        <div class="task-title">
+            <div class="task-complete-icon"></div>
+            <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>
+        </div>
+
+        {% else %}
+
+        <div class="task-title">
+            <div class="task-incomplete-icon"></div>
+            <a href="{% url 'task-update' task.id %}">{{task}}</a>
+        </div>
+        {% endif %}
+
+        <a href="{% url 'task-delete' task.id %}" class="delete-link">&#10006;</a>
+
+    </div>
+
+
+
+
+</p>
+{% endfor %}
+{% if not search_input %}
+<p>Total number of Tasks: {{countPages}}</p>
+<p>Page number: {{page.number}}</p>
+
+
+{% for i in page.paginator.page_range %}
+{% if page.number == i %}
+
+<span style="color:orange; font-weight:bold; padding:3px;">{{ i }} </span>
+{% elif i > page.number|add:'-5' and i < page.number|add:'5' %}
+<a href="?page={{ i }}">{{ i }}</a>
+{% endif %}
+{% endfor %}
+
+
+    <div>
+        {% if page.has_previous %}
+        <a href="{% url 'tasks' %}?page={{page.previous_page_number}}">Previous Page</a>
+        {% endif %}
+        {% if page.has_next %}
+        <a href="{% url 'tasks' %}?page={{page.next_page_number}}">Next Page</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+
+{% endblock content %}
+
+
