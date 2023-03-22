@@ -87,22 +87,17 @@ class TaskList(LoginRequiredMixin, ListView):
 
     def get_context_dataORG(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['color'] = 'red'
-        # context['tasks'] = context['tasks'].filter(user=self.request.user)
-        # context['count'] = context['tasks'].filter(complete=False).count()
+        
 
 
 
 #Pagination Starts
-        #tasks = Task.objects.all()
+        
         tasks = context['tasks'].filter(user=self.request.user)
         paginator = Paginator(tasks, 2)
-        # if(self.request.GET['page']):
-        # print(self.request.GET.lists())
+       
         if self.request.GET:
-            # if self.request.GET['search-area']:
-            #     print('inside for search')
-
+           
             if self.request.GET['page']:
                 print('inside')
                 page_number = self.request.GET['page']
@@ -111,16 +106,11 @@ class TaskList(LoginRequiredMixin, ListView):
                 print('outside')
 
         else:
-            print('bebenki 222')
+            
             page_number = 1
             page = paginator.get_page(page_number)
 
-        # if(self.request.GET['page']):
-        #     page_number = self.request.GET['page']
-        #     print('eben')
-        # else:
-        #     page_number = 1
-        #     print('nasil')
+        
 
 
 
@@ -134,15 +124,15 @@ class TaskList(LoginRequiredMixin, ListView):
         }
 
         # Pagination Ends
-        print('ebeninki 0000')
+        
 
         # for searching
         search_input = self.request.GET.get('search-area') or ''
 
         if search_input:
-            # context['tasks'] = context['tasks'].filter(title__icontains=search_input)
+            
             context['tasks'] = context['tasks'].filter(title__startswith=search_input)
-            print('ebeninki')
+            
 
         context['search_input'] = search_input
 
