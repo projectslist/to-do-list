@@ -6,7 +6,7 @@ It is a simple CRUD project with unit tests examples.
 - Clone the repository using git clone 
 - ``https://github.com/projectslist/to-do-list.git``.
 - Make ready python env for the project
-- Run the server using python manage.py runserver.
+- Run the server using ``python manage.py runserver``.
 
 # URL Patterns
 The following URL patterns are defined in the urlpatterns list in urls.py:
